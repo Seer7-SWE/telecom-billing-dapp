@@ -30,6 +30,7 @@ export default defineConfig({
     host: true,
   },
   build: {
-    outDir: path.resolve(process.cwd(), "dist"),
+     outDir: 'dist', 
+     emptyOutDir: true,
   },
 });

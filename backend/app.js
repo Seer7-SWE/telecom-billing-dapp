@@ -17,16 +17,18 @@ app.use("/plans", plansRoutes);
 app.use("/usage", usageRoutes);
 app.use("/payments", paymentsRoutes);
 
-// Initialize backend (DB, etc.)
+// Initialize backend (DB)
 let initialized = false;
 export async function initBackend() {
   if (!initialized) {
-    if (process.env.MONGO_URI) {
-      await connectDB();
-    } else {
-      console.log("⚠️ Skipping DB init (MONGO_URI not set). Using mock mode.");
+    const uri = process.env.MONGO_URI;
+    if (!uri) {
+      console.error("❌ MONGO_URI missing. Please set in .env or Netlify UI.");
+      throw new Error("MONGO_URI not set");
     }
+    await connectDB(uri);
     initialized = true;
+    console.log("✅ Backend initialized with MongoDB");
   }
 }
 

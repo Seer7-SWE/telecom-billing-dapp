@@ -18,9 +18,16 @@ app.use("/usage", usageRoutes);
 app.use("/payments", paymentsRoutes);
 
 // Initialize backend (DB, etc.)
+let initialized = false;
 export async function initBackend() {
-  await connectDB();
-  console.log("✅ Backend initialized inside Vite middleware");
+  if (!initialized) {
+    if (process.env.MONGO_URI) {
+      await connectDB();
+    } else {
+      console.log("⚠️ Skipping DB init (MONGO_URI not set). Using mock mode.");
+    }
+    initialized = true;
+  }
 }
 
 export default app;

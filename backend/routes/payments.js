@@ -1,27 +1,20 @@
 import express from "express";
+import { supabase } from "../supabaseClient.js";
 
 const router = express.Router();
 
-// Mock payments array
-let payments = [];
-
-// GET all payments
-router.get("/", (req, res) => {
-  res.json(payments);
+// GET payments
+router.get("/", async (req, res) => {
+  const { data, error } = await supabase.from("payments").select("*").order("date", { ascending: false });
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
 });
 
-// POST a new payment record
-router.post("/", (req, res) => {
-  const { user, amount, type } = req.body;
-  const payment = {
-    id: payments.length + 1,
-    user,
-    amount,
-    type, // "recharge" or "settle"
-    date: new Date(),
-  };
-  payments.push(payment);
-  res.json(payment);
+// POST payment
+router.post("/", async (req, res) => {
+  const { data, error } = await supabase.from("payments").insert([req.body]).select();
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data[0]);
 });
 
 export default router;

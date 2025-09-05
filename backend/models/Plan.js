@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+
 const PlanSchema = new mongoose.Schema({
   planId: { type: Number, index: true, unique: true },
   name: String,
@@ -9,4 +9,3 @@ const PlanSchema = new mongoose.Schema({
   active: Boolean
 }, { timestamps: true });
 
-export default mongoose.model("Plan", PlanSchema);

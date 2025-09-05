@@ -16,12 +16,13 @@
 import serverless from "serverless-http";
 import app, { initBackend } from "../../backend/app.js";
 
-let handler;
+// cache the serverless-wrapped app
+let serverlessHandler;
 
 export async function handler(event, context) {
-  if (!handler) {
+  if (!serverlessHandler) {
     await initBackend();
-    handler = serverless(app);
+    serverlessHandler = serverless(app);
   }
-  return handler(event, context);
+  return serverlessHandler(event, context);
 }

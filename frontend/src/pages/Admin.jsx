@@ -4,31 +4,19 @@ import PlanCard from "../components/PlanCard";
 export default function Admin() {
   const [plans, setPlans] = useState([]);
 
-  // useEffect(() => {
-  //   async function fetchPlans() {
-  //     try {
-  //       const res = await fetch("/api/plans");
-  //       if (!res.ok) throw new Error("Failed to fetch plans");
-  //       const data = await res.json();
-  //       setPlans(Array.isArray(data) ? data : []); // ✅ ensure array
-  //     } catch (err) {
-  //       console.error("Error loading plans:", err);
-  //       setPlans([]); // ✅ fallback
-  //     }
-  //   }
-  //   fetchPlans();
-  // }, []);
-
   useEffect(() => {
-  async function fetchPlans() {
-    const res = await fetch("/api/plans");
-    const data = await res.json();
-    console.log("Fetched plans:", data);   // 👈 check if array
-    setPlans(Array.isArray(data) ? data : []);
-  }
-   fetchPlans();
- }, []);
-
+    async function fetchPlans() {
+      try {
+        const res = await fetch("/api/plans");
+        const data = await res.json();
+        console.log("Fetched plans:", data); // 👀 log it
+        setPlans(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Error loading plans:", err);
+      }
+    }
+    fetchPlans();
+  }, []);
 
   return (
     <div className="p-6">

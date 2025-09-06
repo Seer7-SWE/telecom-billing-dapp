@@ -22,22 +22,28 @@ ChartJS.register(
   Legend
 );
 
-export default function UsageChart({ data = [] }) {
-  if (!Array.isArray(data) || data.length === 0) {
+export default function UsageChart({ data }) {
+  if (!Array.isArray(data)) {
+    return <p>Loading usage data...</p>;
+  }
+
+  if (data.length === 0) {
     return <p>No usage data</p>;
   }
 
   return (
-    <div>
-      {data.map((item, i) => (
-        <p key={i}>
-          {item.user}: {item.units} units (${item.charge})
-        </p>
-      ))}
+    <div className="p-4 border rounded bg-white">
+      <h3 className="text-lg font-semibold mb-2">Usage Data</h3>
+      <ul className="list-disc ml-6">
+        {data.map((item, i) => (
+          <li key={i}>
+            {item.user}: {item.units} units (${item.charge})
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
-
 
 // export default function UsageChart({ usage }) {
 //   const data = {

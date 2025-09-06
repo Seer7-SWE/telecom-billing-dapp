@@ -16,6 +16,10 @@ app.use("/payments", paymentsRouter);
 export async function initBackend() {
   // any Supabase setup etc.
   console.log("Backend initialized ✅");
+  app.get("/", (req, res) => {
+  res.json({ status: "ok from backend" });
+});
+
 }
 
 export default app;

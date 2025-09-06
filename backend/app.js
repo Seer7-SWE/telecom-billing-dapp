@@ -8,18 +8,19 @@ const app = express();
 
 app.use(bodyParser.json());
 
-// ✅ Mount directly at root, not "/api"
+// ✅ Mount routers immediately
 app.use("/plans", plansRouter);
 app.use("/usage", usageRouter);
 app.use("/payments", paymentsRouter);
 
-export async function initBackend() {
-  // any Supabase setup etc.
-  console.log("Backend initialized ✅");
-  app.get("/", (req, res) => {
+// ✅ Always available health check
+app.get("/", (req, res) => {
   res.json({ status: "ok from backend" });
 });
 
+export async function initBackend() {
+  // Example: connect Supabase or run migrations
+  console.log("Backend initialized ✅");
 }
 
 export default app;

@@ -1,29 +1,13 @@
-// import serverless from "serverless-http";
-// import app, { initBackend } from "../../backend/app.js";
-
-
-
-// // Ensure DB etc. initialized once
-// await initBackend();
-
-// export async function handler(event, context) {
-//   return {
-//     statusCode: 200,
-//     body: JSON.stringify({ message: 'OK' }),
-//   };
-// }
-
 import serverless from "serverless-http";
 import app, { initBackend } from "../../backend/app.js";
 
 let serverlessHandler;
 
 export async function handler(event, context) {
-  console.log("➡️ Incoming event:", event.path); 
+  console.log("➡️ Incoming path:", event.path);
   if (!serverlessHandler) {
     await initBackend();
     serverlessHandler = serverless(app);
   }
   return serverlessHandler(event, context);
 }
-

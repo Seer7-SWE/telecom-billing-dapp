@@ -1,20 +1,12 @@
 import express from "express";
-import { supabase } from "../supabaseClient.js";
-
 const router = express.Router();
 
-// GET usage logs
-router.get("/", async (req, res) => {
-  const { data, error } = await supabase.from("usage_logs").select("*").order("date", { ascending: false });
-  if (error) return res.status(500).json({ error: error.message });
-  res.json(data);
-});
-
-// POST new usage log
-router.post("/", async (req, res) => {
-  const { data, error } = await supabase.from("usage_logs").insert([req.body]).select();
-  if (error) return res.status(500).json({ error: error.message });
-  res.json(data[0]);
+// Mock response for testing
+router.get("/", (req, res) => {
+  res.json([
+    { id: 1, name: "Prepaid Basic", pricePerUnit: 0.05 },
+    { id: 2, name: "Postpaid Standard", pricePerUnit: 0.03 }
+  ]);
 });
 
 export default router;

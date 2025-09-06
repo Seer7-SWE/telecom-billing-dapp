@@ -1,11 +1,12 @@
+import express from "express";
+const router = express.Router();
 
-const PlanSchema = new mongoose.Schema({
-  planId: { type: Number, index: true, unique: true },
-  name: String,
-  planType: { type: String, enum: ["PREPAID", "POSTPAID"] },
-  pricePerUnit: String,
-  subscriptionFee: String,
-  validityDays: Number,
-  active: Boolean
-}, { timestamps: true });
+// Mock response for testing
+router.get("/", (req, res) => {
+  res.json([
+    { id: 1, name: "Prepaid Basic", pricePerUnit: 0.05 },
+    { id: 2, name: "Postpaid Standard", pricePerUnit: 0.03 }
+  ]);
+});
 
+export default router;

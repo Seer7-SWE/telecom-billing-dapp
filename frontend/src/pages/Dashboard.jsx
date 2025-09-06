@@ -10,13 +10,15 @@ export default function Dashboard() {
       try {
         const usageRes = await fetch("/api/usage");
         const usageData = await usageRes.json();
-        setUsage(usageData);
+        setUsage(Array.isArray(usageData) ? usageData : []);
 
         const paymentsRes = await fetch("/api/payments");
         const paymentsData = await paymentsRes.json();
-        setPayments(paymentsData);
+        setPayments(Array.isArray(paymentsData) ? paymentsData : []);
       } catch (err) {
         console.error("Error loading dashboard:", err);
+        setUsage([]);
+        setPayments([]);
       }
     }
     fetchData();
@@ -31,11 +33,15 @@ export default function Dashboard() {
 
       <h2 className="text-xl font-semibold mt-6 mb-2">Payments</h2>
       <ul className="list-disc ml-6">
-        {payments.map((p, i) => (
-          <li key={i}>
-            {p.user} paid ${p.amount} ({p.type})
-          </li>
-        ))}
+        {payments.length > 0 ? (
+          payments.map((p, i) => (
+            <li key={i}>
+              {p.user} paid ${p.amount} ({p.type})
+            </li>
+          ))
+        ) : (
+          <p>No payments available</p>
+        )}
       </ul>
     </div>
   );

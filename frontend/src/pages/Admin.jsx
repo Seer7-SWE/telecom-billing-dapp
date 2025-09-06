@@ -8,10 +8,12 @@ export default function Admin() {
     async function fetchPlans() {
       try {
         const res = await fetch("/api/plans");
+        if (!res.ok) throw new Error("Failed to fetch plans");
         const data = await res.json();
-        setPlans(data);
+        setPlans(Array.isArray(data) ? data : []); // ✅ ensure array
       } catch (err) {
         console.error("Error loading plans:", err);
+        setPlans([]); // ✅ fallback
       }
     }
     fetchPlans();
@@ -21,9 +23,13 @@ export default function Admin() {
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {plans.map((plan) => (
-          <PlanCard key={plan.id || plan.planId} plan={plan} />
-        ))}
+        {plans.length > 0 ? (
+          plans.map((plan, idx) => (
+            <PlanCard key={plan.id || plan.planId || idx} plan={plan} />
+          ))
+        ) : (
+          <p>No plans available</p>
+        )}
       </div>
     </div>
   );

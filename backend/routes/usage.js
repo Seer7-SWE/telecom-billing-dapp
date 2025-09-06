@@ -1,12 +1,18 @@
 import express from "express";
+import { supabase } from "../db/supabase.js";
+
 const router = express.Router();
 
-// ✅ Basic test route
-router.get("/", (req, res) => {
-  res.json([
-    { user: "Alice", units: 120, charge: 6.0 },
-    { user: "Bob", units: 300, charge: 9.0 }
-  ]);
+// Get usage logs (all users for now, later filter by logged-in user)
+router.get("/", async (req, res) => {
+  const { data, error } = await supabase.from("usage_logs").select("*").order("date", { ascending: false });
+
+  if (error) {
+    console.error("Error fetching usage logs:", error);
+    return res.status(500).json({ error: "Failed to fetch usage logs" });
+  }
+
+  res.json(data);
 });
 
 export default router;

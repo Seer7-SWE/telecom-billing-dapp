@@ -8,18 +8,18 @@ const app = express();
 
 app.use(bodyParser.json());
 
-// ✅ Mount with /api prefix
-app.use("/api/plans", plansRouter);
-app.use("/api/usage", usageRouter);
-app.use("/api/payments", paymentsRouter);
+// Mount Supabase-backed routes
+app.use("/plans", plansRouter);
+app.use("/usage", usageRouter);
+app.use("/payments", paymentsRouter);
 
-// ✅ Health check
-app.get("/api", (req, res) => {
-  res.json({ status: "ok from backend" });
+// Health check
+app.get("/", (req, res) => {
+  res.json({ status: "ok from backend (Supabase connected)" });
 });
 
 export async function initBackend() {
-  console.log("Backend initialized ✅");
+  console.log("✅ Backend initialized with Supabase");
 }
 
 export default app;

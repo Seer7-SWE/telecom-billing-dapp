@@ -4,7 +4,7 @@ import app, { initBackend } from "../../backend/app.js";
 let serverlessHandler;
 
 export async function handler(event, context) {
-  console.log("➡️ Incoming path:", event.path);
+  console.log("➡️ API Event Path:", event.path); // 👀 log incoming
   if (!serverlessHandler) {
     await initBackend();
     serverlessHandler = serverless(app);

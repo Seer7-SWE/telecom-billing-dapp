@@ -1,12 +1,16 @@
 import express from "express";
+import { supabase } from "../db/supabase.js";
+
 const router = express.Router();
 
-// Mock response for testing
-router.get("/", (req, res) => {
-  res.json([
-    { id: 1, name: "Prepaid Basic", pricePerUnit: 0.05 },
-    { id: 2, name: "Postpaid Standard", pricePerUnit: 0.03 }
-  ]);
+// Get all plans
+router.get("/", async (req, res) => {
+  const { data, error } = await supabase.from("plans").select("*");
+  if (error) {
+    console.error("Error fetching plans:", error);
+    return res.status(500).json({ error: "Failed to fetch plans" });
+  }
+  res.json(data);
 });
 
 export default router;

@@ -8,18 +8,17 @@ const app = express();
 
 app.use(bodyParser.json());
 
-// ✅ Mount routers immediately
+// ✅ Mount routers
 app.use("/plans", plansRouter);
 app.use("/usage", usageRouter);
 app.use("/payments", paymentsRouter);
 
-// ✅ Always available health check
+// ✅ Health check
 app.get("/", (req, res) => {
   res.json({ status: "ok from backend" });
 });
 
 export async function initBackend() {
-  // Example: connect Supabase or run migrations
   console.log("Backend initialized ✅");
 }
 

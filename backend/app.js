@@ -8,13 +8,13 @@ const app = express();
 
 app.use(bodyParser.json());
 
-// ✅ Mount routers
-app.use("/plans", plansRouter);
-app.use("/usage", usageRouter);
-app.use("/payments", paymentsRouter);
+// ✅ Mount with /api prefix
+app.use("/api/plans", plansRouter);
+app.use("/api/usage", usageRouter);
+app.use("/api/payments", paymentsRouter);
 
 // ✅ Health check
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.json({ status: "ok from backend" });
 });
 

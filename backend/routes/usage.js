@@ -1,11 +1,11 @@
 import express from "express";
 const router = express.Router();
 
-// Mock response for testing
+// ✅ Basic test route
 router.get("/", (req, res) => {
   res.json([
-    { id: 1, name: "Prepaid Basic", pricePerUnit: 0.05 },
-    { id: 2, name: "Postpaid Standard", pricePerUnit: 0.03 }
+    { user: "Alice", units: 120, charge: 6.0 },
+    { user: "Bob", units: 300, charge: 9.0 }
   ]);
 });
 

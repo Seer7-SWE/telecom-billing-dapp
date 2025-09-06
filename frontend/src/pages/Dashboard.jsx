@@ -5,24 +5,35 @@ export default function Dashboard() {
   const [usage, setUsage] = useState([]);
   const [payments, setPayments] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const usageRes = await fetch("/api/usage");
-        const usageData = await usageRes.json();
-        setUsage(Array.isArray(usageData) ? usageData : []);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const usageRes = await fetch("/api/usage");
+  //       const usageData = await usageRes.json();
+  //       setUsage(Array.isArray(usageData) ? usageData : []);
 
-        const paymentsRes = await fetch("/api/payments");
-        const paymentsData = await paymentsRes.json();
-        setPayments(Array.isArray(paymentsData) ? paymentsData : []);
-      } catch (err) {
-        console.error("Error loading dashboard:", err);
-        setUsage([]);
-        setPayments([]);
-      }
-    }
-    fetchData();
+  //       const paymentsRes = await fetch("/api/payments");
+  //       const paymentsData = await paymentsRes.json();
+  //       setPayments(Array.isArray(paymentsData) ? paymentsData : []);
+  //     } catch (err) {
+  //       console.error("Error loading dashboard:", err);
+  //       setUsage([]);
+  //       setPayments([]);
+  //     }
+  //   }
+  //   fetchData();
+  // }, []);
+
+  useEffect(() => {
+  async function fetchPlans() {
+    const res = await fetch("/api/plans");
+    const data = await res.json();
+    console.log("Fetched plans:", data);   // 👈 check if array
+    setPlans(Array.isArray(data) ? data : []);
+  }
+   fetchPlans();
   }, []);
+
 
   return (
     <div className="p-6">

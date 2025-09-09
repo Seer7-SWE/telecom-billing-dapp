@@ -1,5 +1,5 @@
 // backend/app.js
-import "dotenv/config"; // loads .env for local dev; safe on Netlify too (no file)
+import "dotenv/config"; // local .env only; Netlify uses env vars from UI
 import express from "express";
 import bodyParser from "body-parser";
 import plansRouter from "./routes/plans.js";
@@ -9,7 +9,7 @@ import paymentsRouter from "./routes/payments.js";
 const app = express();
 app.use(bodyParser.json());
 
-// Mount routers at /api/...
+// Mount everything under /api/... so normalized path matches
 app.use("/api/plans", plansRouter);
 app.use("/api/usage", usageRouter);
 app.use("/api/payments", paymentsRouter);
@@ -20,8 +20,8 @@ app.get("/api", (req, res) => {
 });
 
 export async function initBackend() {
-  // leave room to init anything server-side. Keep fast and idempotent.
-  console.log("Backend init (Supabase client will use env vars).");
+  // Keep this fast and idempotent. Logging is helpful to confirm init ran.
+  console.log("Backend initialized (initBackend) — ready.");
 }
 
 export default app;

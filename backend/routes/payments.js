@@ -3,6 +3,7 @@ import { supabase } from "../supabaseClient.js";
 
 router.get("/", async (req, res) => {
   try {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from("payments")
       .select("*")

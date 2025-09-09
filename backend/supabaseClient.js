@@ -1,11 +1,12 @@
-
+// backend/db/supabase.js
+import "dotenv/config"; // safe; will just load .env locally
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.VITE_SUPABASE_URL;
-const supabaseKey = process.env.VITE_SUPABASE_KEY;
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_KEY;
 
-if (!supabaseUrl || !supabaseKey) {
-  console.error("❌ Supabase env vars missing");
+if (!SUPABASE_URL || !SUPABASE_KEY) {
+  console.warn("⚠️ Supabase env vars missing (SUPABASE_URL / SUPABASE_KEY).");
 }
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);

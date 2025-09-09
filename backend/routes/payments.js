@@ -1,18 +1,18 @@
 import express from "express";
 import { supabase } from "../supabaseClient.js";
 
-const router = express.Router();
-
-// Get payments (all users for now, later filter by logged-in user)
 router.get("/", async (req, res) => {
-  const { data, error } = await supabase.from("payments").select("*").order("date", { ascending: false });
-
-  if (error) {
-    console.error("Error fetching payments:", error);
-    return res.status(500).json({ error: "Failed to fetch payments" });
+  try {
+    const { data, error } = await supabase
+      .from("payments")
+      .select("*")
+      .order("date", { ascending: false });
+    if (error) throw error;
+    res.json(Array.isArray(data) ? data : []);
+  } catch (err) {
+    console.error("GET /payments error:", err);
+    res.status(500).json({ error: "Failed to fetch payments" });
   }
-
-  res.json(data);
 });
 
 export default router;

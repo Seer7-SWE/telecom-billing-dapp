@@ -1,5 +1,6 @@
 import express from "express";
-import { supabase } from "../supabaseClient.js";
+import { getSupabaseClient } from "../supabaseClient.js";
+
 
 router.get("/", async (req, res) => {
   try {

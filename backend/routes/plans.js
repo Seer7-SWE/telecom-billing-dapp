@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase.from("plans").select("*").order("id", { ascending: true });
     if (error) throw error;
     res.json(Array.isArray(data) ? data : []);

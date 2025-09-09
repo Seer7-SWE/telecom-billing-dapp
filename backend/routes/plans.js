@@ -3,14 +3,15 @@ import { supabase } from "../supabaseClient.js";
 
 const router = express.Router();
 
-// Get all plans
 router.get("/", async (req, res) => {
-  const { data, error } = await supabase.from("plans").select("*");
-  if (error) {
-    console.error("Error fetching plans:", error);
-    return res.status(500).json({ error: "Failed to fetch plans" });
+  try {
+    const { data, error } = await supabase.from("plans").select("*").order("id", { ascending: true });
+    if (error) throw error;
+    res.json(Array.isArray(data) ? data : []);
+  } catch (err) {
+    console.error("GET /plans error:", err);
+    res.status(500).json({ error: "Failed to fetch plans" });
   }
-  res.json(data);
 });
 
 export default router;

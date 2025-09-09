@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from("usage_logs")
       .select("*")

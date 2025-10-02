@@ -1,29 +1,12 @@
-# [build]
-#   command = "npm run build"
-#   publish = "frontend/dist"
-
-# [functions]
-#   node_bundler = "esbuild"
-#   included_files = ["netlify/functions/**"]
-
-# [functions.api]
-#   external_node_modules = []
-#   node_bundler = "esbuild"
-#   esm = true
-
-# [[redirects]]
-#   from = "/api/*"
-#   to = "/.netlify/functions/api/:splat"
-#   status = 200
 [build]
   command = "npm run build"
   publish = "frontend/dist"
 
 [functions]
   directory = "netlify/functions"
-  node_bundler = "esbuild"
 
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/api"
+  to = "/.netlify/functions/api/:splat"
   status = 200
+  force = true

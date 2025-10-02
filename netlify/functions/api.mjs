@@ -3,9 +3,8 @@ import serverless from "serverless-http";
 import app from "../../backend/app.js";
 
 console.log("Netlify function api initializing. env summary:", {
-  has_SUPABASE_URL: !!process.env.SUPABASE_URL,
-  has_SUPABASE_KEY: !!process.env.SUPABASE_KEY,
-  has_VITE_SUPABASE_URL: !!process.env.VITE_SUPABASE_URL,
+  SUPABASE_URL: !!process.env.SUPABASE_URL,
+  SUPABASE_KEY: !!process.env.SUPABASE_KEY
 });
 
 export const handler = serverless(app);

@@ -2,6 +2,8 @@ import express from "express";
 import { getSupabaseClient } from "../supabaseClient.js";
 
 
+const router = express.Router();
+
 router.get("/", async (req, res) => {
   try {
     const supabase = getSupabaseClient();

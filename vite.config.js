@@ -3,14 +3,10 @@ import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "node:path";
 
-// Only import backend in dev to avoid crashing the build
 const isDev = process.env.NODE_ENV !== "production";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
-
-  // Inject .env into process.env for backend usage
-  Object.assign(process.env, env);
 
   return {
     plugins: [
@@ -29,10 +25,7 @@ export default defineConfig(({ mode }) => {
           server.middlewares.use("/api", app);
         },
       },
-    ].filter(Boolean), // remove false plugins in production
-    define: {
-      "process.env": env,
-    },
+    ].filter(Boolean),
     root: path.resolve(process.cwd(), "frontend"),
     server: {
       port: Number(env.PORT) || 5173,

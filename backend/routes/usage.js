@@ -1,6 +1,6 @@
 // backend/routes/usage.js
 import express from "express";
-import supabase from "../db/supabase.js";
+import { getSupabaseClient } from "../supabaseClient.js";
 import * as mock from "../mockBlockchain.js";
 
 const router = express.Router();

@@ -7,7 +7,7 @@ import bodyParser from "body-parser";
 import plansRouter from "./routes/plans.js";
 import usageRouter from "./routes/usage.js";
 import paymentsRouter from "./routes/payments.js";
-import mockActionsRouter from "./routes/mockActions.js";
+
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use("/api/plans", plansRouter);   // Plan-related routes
 app.use("/api/usage", usageRouter);   // Usage-related routes
 app.use("/api/payments", paymentsRouter);  // Payment-related routes
-app.use("/mock", mockActionsRouter);
+
 
 // Health check endpoint
 app.get("/api", (req, res) => {

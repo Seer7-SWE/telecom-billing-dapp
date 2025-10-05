@@ -1,9 +1,9 @@
 // backend/mockBlockchain.js
-let balances = {};
-let usageLogs = {};
+let balances = {};  // { userId: { prepaid, postpaid, plan } }
+let usageLogs = {}; // { userId: [{amount, date}] }
 
 export const subscribePlan = (userId, planId) => {
-  balances[userId] = balances[userId] || { prepaid: 0, postpaid: 0 };
+  balances[userId] = balances[userId] || { prepaid: 0, postpaid: 0, plan: null };
   balances[userId].plan = planId;
   usageLogs[userId] = usageLogs[userId] || [];
   return { success: true, planId };
@@ -27,4 +27,8 @@ export const settleBill = (userId, amount) => {
 
 export const getUsageLogs = (userId) => {
   return usageLogs[userId] || [];
+};
+
+export const getBalance = (userId) => {
+  return balances[userId] || { prepaid: 0, postpaid: 0, plan: null };
 };

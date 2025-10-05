@@ -6,24 +6,19 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const userId = req.query.userId || "demoUser";
     const supabase = getSupabaseClient();
-
-    // Supabase data
-    const { data, error } = await supabase
-      .from("usage_logs")
-      .select("*")
-      .order("date", { ascending: false });
-    if (error) throw error;
-
-    // Add mock blockchain usage logs
-    const mockLogs = mock.getUsageLogs(userId);
-
-    res.json([...data, ...mockLogs]);
+    console.log("Testing connection:", process.env.SUPABASE_URL);
+    const { data, error } = await supabase.from("usage_logs").select("*");
+    if (error) {
+      console.error("Supabase error:", error);
+      throw error;
+    }
+    res.json(data);
   } catch (err) {
-    console.error("GET /usage error:", err);
-    res.status(500).json({ error: "Failed to fetch usage logs" });
+    console.error("Catch block error:", err.message);
+    res.status(500).json({ error: err.message });
   }
 });
+
 
 export default router;

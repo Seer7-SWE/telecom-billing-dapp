@@ -15,9 +15,11 @@ router.get("/", async (req, res) => {
       .order("date", { ascending: false });
     if (error) throw error;
 
-    // Example: add mock payments
+    // Include mock balance as demo payment
     const mockBalance = mock.getBalance(userId);
-    const mockPayments = [{ userId, amount: mockBalance.prepaid, date: new Date(), source: "mock" }];
+    const mockPayments = [
+      { userId, amount: mockBalance.prepaid, date: new Date(), source: "mock" }
+    ];
 
     res.json([...data, ...mockPayments]);
   } catch (err) {

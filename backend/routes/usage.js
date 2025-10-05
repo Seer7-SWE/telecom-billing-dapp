@@ -1,35 +1,21 @@
-// backend/routes/usage.js
 import express from "express";
 import { getSupabaseClient } from "../supabaseClient.js";
-import * as mock from "../mockBlockchain.js";
+
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const userId = req.query.userId || "demoUser";
-
-    // Get from mock blockchain
-    const usageData = mock.getUsageLogs(userId);
-
-    // Optionally sync with Supabase
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
-      .from("usage")
+      .from("usage_logs")
       .select("*")
-      .eq("user_id", userId);
-
-    if (error) {
-      console.error("Supabase usage fetch error:", error);
-      return res.status(500).json({ error: "Failed to fetch usage logs" });
-    }
-
-    res.json({
-      data: data || [],
-      mock: usageData,
-    });
+      .order("date", { ascending: false });
+    if (error) throw error;
+    res.json(Array.isArray(data) ? data : []);
   } catch (err) {
-    console.error("Unhandled /usage error:", err);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("GET /usage error:", err);
+    res.status(500).json({ error: "Failed to fetch usage logs" });
   }
 });
 

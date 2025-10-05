@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
     const userId = req.query.userId || "demoUser";
     const supabase = getSupabaseClient();
 
-    // Fetch from Supabase
+    // Supabase data
     const { data, error } = await supabase
       .from("usage_logs")
       .select("*")
